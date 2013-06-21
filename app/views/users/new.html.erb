@@ -14,22 +14,21 @@
       <%= f.label :name %>
       <%= f.text_field :name %>
 
- 
+ <br />
 
       <%= f.label :email %>
       <%= f.text_field :email %>
-      
+       <br />
       <%= f.label :password %>
       <%= f.password_field :password %>
-
+ <br />
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
-
+ <br />
       <%= f.label :phone, "Phone Number (XXX-XXX-XXXX)" %>
       <%= f.text_field :phone %>
- 
- 	<%= f.label :carrier, "Carriers "%>
-		<%= f.select :carrier, { "AT&T"=> 'at&t', "Sprint"=>'sprint', "T-Mobile"=>'t-mobile', "Verizon"=>'verizon' }  %>
+  <br />
+ 	   <br />
        
       <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
     <% end %>
