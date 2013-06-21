@@ -1,33 +1,97 @@
-<%- model_class = User -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
-</div>
-
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @user.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:password) %>:</strong></dt>
-  <dd><%= @user.password %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:password_confirmation) %>:</strong></dt>
-  <dd><%= @user.password_confirmation %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
-  <dd><%= @user.email %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:company) %>:</strong></dt>
-  <dd><%= @user.company %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:phone) %>:</strong></dt>
-  <dd><%= @user.phone %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:remember_token) %>:</strong></dt>
-  <dd><%= @user.remember_token %></dd>
-</dl>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              users_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_user_path(@user), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              user_path(@user),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h2>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+        
+        
+      </h2>
+    </section>
+    <section>
+    	<p>
+    		Email : <b> <%= @user.email %> </b> 
+    	</p>
+    <p>
+    	Phone : <b><%= @user.phone %></b>
+    </p>	
+    		
+    	<p>
+    		  	
+    	Carrier : <b>  <%= @user.carrier %></b>
+    		
+    		</p>
+  
+    </section>
+    
+    <section>
+    	 <% isevent=0 %>
+    <u><h4> Today's Events </h4></u>
+    <% @holidays.each do |article| %>
+        <% if article.creator == current_user.name%>
+        	<% if article.date == Date.today%>
+        		  <b><li class="calendar"><%= link_to article.name, article, {:style => "color:purple"} %></li></b>
+        		   <% isevent=1 %>
+        		   <% end %>
+        	<% end %>
+        <% end %>
+    <% @events.each do |article| %>
+        <% if article.creator == current_user.name%>
+        	<% if article.dayof == Date.today%>
+        		  <b><li class="calendar"><%= link_to article.name, article, {:style => "color:red"} %></li></b>
+        		   <% isevent=1 %>
+        		   <% end %>
+        	<% end %>
+        <% end %>
+     <% if isevent==0 %>
+     			No Interviews today   
+			<p> : (</p>
+     <% end %>   
+    </section>
+    
+    <section class="calendar">
+    
+    <h2 id="month">
+    	<%= link_to "<", date: @date.prev_month %>
+    <b><Font color=black><%=h @date.strftime("%B %Y") %></Font></b>	
+    	<%= link_to ">", date: @date.next_month %>
+    </h2>
+      <p> 
+    	Events are <FONT COLOR=red> Red </FONT> and  Holidays are <Font Color=purple>Purple</Font>
+    	</p>
+    <%= calendar(@date) do |date|%>
+    
+    <%= date.day    %>
+  
+      <% if @holidays_by_date[date] %>
+      <ul class="calendar">
+        <% @holidays_by_date[date].each do |article| %>
+          <b><li class="calendar">
+          	<% if article.creator == current_user.name %>
+          		<%= link_to article.name, article , {:style => "color:purple"} %>   </li></b>
+          		  <% end %>
+        <% end %>
+      </ul>
+        <% end %> 
+    
+      <% if @events_by_date[date] %>
+      <ul class="calendar">
+        <% @events_by_date[date].each do |article| %>
+        <% if article.creator == current_user.name%>
+        	  <b><li class="calendar"><%= link_to article.name, article, {:style => "color:red"} %></li></b>
+        	   <% end %>
+        <% end %>
+      </ul>
+        <% end %>   
+     <% end %>
+    </section>
+    
+     <section>
+     <%= link_to "Create an Event now! ", '/create', class: "btn btn-large btn-primary" %>
+  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <%= link_to "Add Holiday! ", '/holidays/new', class: "btn btn-large btn-primary" %>
+      </section>	
+  </aside>
+  
 </div>

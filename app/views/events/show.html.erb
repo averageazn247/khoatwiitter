@@ -1,0 +1,89 @@
+<% provide(:title, @event.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+    	<h1> <%= @event.name %></h1>
+      <h1>
+      	<%= "When: "%>
+        <%= @event.dayof%> 
+      </h1>      
+      <h3>
+      	<%= "Starting: "%>
+		<% if @event.start_time.hour > 12 %>
+		 
+			<%= @event.start_time.hour - 12 %>:
+			
+				<% if @event.start_time.min == 0 %>
+				  	00 PM
+				<% else %>
+				
+					<%= @event.start_time.min %> PM
+				<% end %>
+			
+			
+		<%else%>
+		 
+			<%= @event.start_time.hour %>:
+				<% if @event.start_time.min ==0 %>
+				  	00 AM
+				<% else %>
+				
+					<%= @event.start_time.min %> AM
+				<% end %>
+					
+				
+      	<% end%>
+      </h3>
+      
+      <h3>
+      	<%= "Ending: "%>
+      	<% if @event.end_time.hour == 0 %>
+      	<%= "00"%>
+      		
+      	<% else %>
+      		<% if @event.end_time.hour > 12 %>
+      			<%= @event.end_time.hour - 12  %>: 
+      		<% else %>
+      			<%= @event.end_time.hour %>:
+      			<% end %>
+      	<% end %>
+      	
+      	<% if @event.end_time.min == 0 then %>
+      
+      		<% if @event.end_time.hour > 12 %>
+      			<%= "00 PM"%>
+      		<%else%>
+      			<%= "00 AM"%>
+      			
+      		
+      		<% end %>
+      	<% else %>
+      		
+
+		<% if @event.end_time.hour > 12 %>		
+      		<%= @event.end_time.min%> PM
+      		
+      		<% else %>
+      		 
+      		<%= @event.end_time.min%> AM
+      		<% end %>
+      	
+      	<% end %>
+      </h3>
+          </section>
+      <section>
+      	Created by :<p><%= @event.creator %>  </p>
+      	
+      	Descriptions: <p> <%= @event.description%></p>
+      
+  
+  	
+   </section>	
+  </aside>
+</div>
+
+  <section>
+  	<%= link_to "Modify this Event! ", '/edit' + @event.id.to_s, class: "btn btn-large btn-primary" %>
+  	<%= link_to "delete", @event, method: :delete,
+                 data: { confirm: "You sure?" }, class: "btn btn-large btn-primary" %> 
+  </section>

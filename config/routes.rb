@@ -1,7 +1,30 @@
 Khoatwiitter::Application.routes.draw do
+   
+  resources :events
   resources :users
-
-  root to: 'pages#home' 
+  resources :holidays
+  resources :sessions, only: [:new, :create, :destroy] 
+  root to: 'static_pages#home' 
+  match '/signup',  to: 'users#new' 
+  match '/help',    to: 'static_pages#help'
+  match '/about',   to: 'static_pages#about'
+  match '/contact', to: 'static_pages#contact'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
+  match '/create' , to: 'events#new' 
+  match '/edit:id', to: 'events#edit'
+  match '/index' , to: 'events#index'
+  match '/users/:id' + :month.to_s, to: 'users#show'
+  match '/holidays/:id' , to: 'holidays#show'
+  match '/holidays/new' , to: 'holidays#new'
+  match '/holidays/edit/:id' , to: 'holidays#edit'
+  
+  
+  
+ 
+  
+  #get "static_pages/test"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -51,16 +74,11 @@ Khoatwiitter::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+   #root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-    resources :sessions, only: [:new, :create, :destroy]
-
-  match '/signup',  to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
 end

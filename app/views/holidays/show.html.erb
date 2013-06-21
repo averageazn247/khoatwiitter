@@ -1,0 +1,10 @@
+<% provide(:title, @holiday.name) %>
+<div class="row">
+	<h1><%= @holiday.name%></h1>
+    <section>
+    	<h2><%= @holiday.date%></h2>
+    </section>
+     <%= link_to "Add Holiday! ", '/holidays/edit/' + @holiday.id.to_s, class: "btn btn-large btn-primary" %>
+     <%= link_to "delete", @holiday, method: :delete,
+                 data: { confirm: "You sure?" }, class: "btn btn-large btn-primary" %>
+</div>

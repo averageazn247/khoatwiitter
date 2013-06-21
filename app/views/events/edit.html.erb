@@ -1,0 +1,84 @@
+<% provide(:title, "Edit Event") %> 
+<h1>Updating Event</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@event) do |f| %>
+      <%= render 'shared/event_error_messages' %>
+	  
+	  <h3>Event Details</h3>
+      <%= f.label " name of event"%>
+      <%= f.text_field :name %>
+      
+      <%= f.label " Description of event"%>
+      <%= f.text_area :description %> 
+      
+      
+	  <%= f.label :date%>
+  	  <%= f.text_field :dayof%>
+  	  
+  	  <section class="time">
+      	Starting at
+			<%= f.time_select :start_time,
+			  :combined => true,
+			  :default => Time.now.change(:hour => 11, :min => 30),
+			  :minute_interval => 15,
+			  :time_separator => "",
+			  :start_hour => 10,
+  			  :start_minute => 30,
+ 			  :end_hour => 14,
+  			  :end_minute => 30
+			 %>
+      </section>
+      
+      <section class="time">
+      	Ending at
+      	<%= f.time_select :end_time,
+			  :combined => true,
+			  :default => Time.now.change(:hour => 11, :min => 30),
+			  :minute_interval => 15,
+			  :time_separator => "",
+			  :start_hour => 10,
+  			  :start_minute => 30,
+ 			  :end_hour => 18,
+  			  :end_minute => 30
+			 %>
+      </section>
+  	  
+  	<section>
+ 	<h3>Reset long Term Reminders</h3>
+ 	
+ 	<p>
+ 		<br> Daily<%= f.check_box :daily  %> 
+ 		Weekly<%= f.check_box :weekly %> 
+ 		Weekends<%= f.check_box :weekends %> 
+ 		Weekdays<%= f.check_box :weekdays %> 
+ 		Biweekly<%= f.check_box :biweekly%> 
+ 		Monthly<%= f.check_box :monthly%> 
+ 		Quarterly<%= f.check_box :quarterly%>
+ 		Semiyearly<%= f.check_box :semiyearly%>
+ 		Yearly<%= f.check_box :yearly %>
+ 		
+ 		
+ 		
+ 	</p>
+ 
+ 
+	  Set Reminder 
+	  <p>
+ 		Monday: <%= f.check_box :monday %>
+	  	Tuesday: <%= f.check_box :tuesday %>
+	  	Wednesday: <%= f.check_box :wedsday %>
+	  	Thusday: <%= f.check_box :thursday %>
+	  	Friday: <%= f.check_box :friday %>
+	  	Saterday: <%= f.check_box :satday %>
+	  	Sunday: <%= f.check_box :sunday %> 
+	  </p>
+	
+
+	</section>
+
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

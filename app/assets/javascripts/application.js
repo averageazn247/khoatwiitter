@@ -12,5 +12,15 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
+//= require bootstrap
+//= require jquery.ui.datepicker
+//=require jquery.ui.spinner
 //= require_tree .
+
+$(function (){
+        $('#event_dayof').datepicker();
+});
+
+$(function (){
+        $('#holiday_date').datepicker();
+});
